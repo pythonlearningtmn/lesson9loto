@@ -1,6 +1,9 @@
 import numpy as np
 import random
+
+
 class Card:
+
     def __init__(self):
         a = [1, 10, 20, 30, 40, 50, 60, 70, 80]
         b = [10, 20, 30, 40, 50, 60, 70, 80, 91]

@@ -60,16 +60,16 @@ while step:
                 if stroka == 'y':
                     if barrel in card[key]:
                         card[key] = check_card(card[key], barrel)
-                        print_card(card[key], key)
                     else:
                         print('Ответ неверный. Номера на карточке нет. Игра завершена.')
                         step = 0
+                        break
                 if stroka == 'n':
                     if barrel in card[key]:
                         print('Ответ неверный. Номер на карточке есть. Игра завершена.')
                         step = 0
-                    else:
-                        print_card(card[key], key)
+                        break
+                print_card(card[key], key)
         for key in card:        # Проверяем - все ли числа отмечены в карточках
             if card[key].max() <= 0:
                 print(f'Выиграл {key.upper()}. Игра завершена.')

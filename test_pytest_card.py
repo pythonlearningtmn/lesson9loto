@@ -1,4 +1,6 @@
 from class_loto import Card
+import numpy as np
+import pytest
 
 
 class TestCard:
@@ -31,3 +33,18 @@ class TestCard:
                 else:
                     numb = self.cards.image[i, j]
                     assert self.cards.isnum(numb) == True
+
+    def test_eq(self):
+        card_new = Card()
+        print()
+        print(self.cards)
+        print(card_new)
+        print(self.cards == card_new)
+        assert self.cards == card_new
+
+    def test_ne(self):
+        card_new = Card()
+        if self.cards == card_new:
+            assert not (self.cards != card_new)
+        else:
+            assert self.cards != card_new

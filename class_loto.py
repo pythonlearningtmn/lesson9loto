@@ -92,9 +92,54 @@ class Card:
         """
         return numb in self.image
 
+    def __str__(self):
+        """
+        Формирует строку из 15 чисел на карточке
+        :return:
+        """
+        stroka = ''
+        for i in range(3):
+            for j in range(9):
+                if self.image[i, j] != 0:
+                    stroka += f'{str(self.image[i, j])} '
+        return stroka
+
+    def __eq__(self, other):
+        """
+        Сравнивает две карточки и выводит одинаковые числа в обоих карточках
+        :param other:
+        :return:
+        """
+        strok = '\nОдинаковые числа на обоих картах:\n'
+        for i in range(3):
+            for j in range(9):
+                if self.image[i, j] != 0:
+                    if self.image[i, j] in other.image:
+                        strok += f'{str(self.image[i, j])} '
+        return strok
+
+    def __contains__(self, num):
+        return num in self.image
+
+    def __ne__(self, other):
+        """
+        Сравнивает две карточки и возвращает True, если в них нет одинаковых чисел.
+        Если есть хотя бы одно одинаковое число - возвращает False
+        :param other:
+        :return:
+        """
+        equal_num = True
+        for i in range(3):
+            for j in range(9):
+                if self.image[i, j] != 0:
+                    if self.image[i, j] in other.image:
+                        equal_num = False
+        return equal_num
+
 
 if __name__ == '__main__':
     crd = Card()
+    print(crd)
     player = "TEST"
     crd.cprint(player)
     num = random.choice(range(1, 91))
@@ -103,3 +148,10 @@ if __name__ == '__main__':
     crd.cprint(player)
     print(crd.cmax())
     print(crd.isnum(num))
+
+    card1 = Card()
+    card2 = Card()
+    print(card1)
+    print(card2)
+    print(card1 == card2)
+    print(card1 != card2)

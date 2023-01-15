@@ -1,6 +1,6 @@
 import random
 import numpy as np
-from loto_func import make_card, print_card, check_card
+from class_loto import Card
 
 step = 1
 while step:
@@ -31,16 +31,17 @@ while step:
         break
 
     # Формируем карточки для всех игроков (компьютеров и людей)
-    card = {}
+    cards = {}
     for n in range(num_comp):
         player = f'comp{n + 1}'
-        card[player] = make_card()
+        cards[player] = Card()
     for m in range(num_human):
         player = f'human{m + 1}'
-        card[player] = make_card()
+        cards[player] = Card()
     print('Игроки получили свои карточки ')
-    for key in card:
-        print_card(card[key], key)
+    for key in cards:
+        # print_card(cards[key], key)
+        cards[key].cprint(key)
 
     # Формируем мешок с бочонками и перемешиваем его
     bag = np.array(range(1, 91))
@@ -51,27 +52,29 @@ while step:
         barrel = bag[0]         # Извлекаем бочонок с номером
         bag = np.delete(bag, 0) # Удаляем бочонок из мешка
         print(f'\nНовый бочонок: {barrel} (в мешке осталось {len(bag)})')
-        for key in card:        # Проверяем номер и отмечаем в карточках
+        for key in cards:        # Проверяем номер и отмечаем в карточках
             if 'comp' in key:   # Карточки компьютеров проверяем автоматически и выводим проверенные на экран
-                card[key] = check_card(card[key], barrel)
-                print_card(card[key], key)
+                cards[key].creplace(barrel)
+                cards[key].cprint(key)
             if 'human' in key:  # Карточки людей проверяем после ответов на вопросы
                 stroka = input(f'{key.upper()} Есть ли номер бочонка в Вашей карточке? (y/n) ')
                 if stroka == 'y':
-                    if barrel in card[key]:
-                        card[key] = check_card(card[key], barrel)
+                    if cards[key].isnum(barrel):
+                        cards[key].creplace(barrel)
                     else:
                         print('Ответ неверный. Номера на карточке нет. Игра завершена.')
                         step = 0
                         break
                 if stroka == 'n':
-                    if barrel in card[key]:
+                    if cards[key].isnum(barrel):
                         print('Ответ неверный. Номер на карточке есть. Игра завершена.')
                         step = 0
                         break
-                print_card(card[key], key)
-        for key in card:        # Проверяем - все ли числа отмечены в карточках
-            if card[key].max() <= 0:
+                    else:
+                        cards[key].creplace(barrel)
+                cards[key].cprint(key)
+        for key in cards:        # Проверяем - все ли числа отмечены в карточках
+            if cards[key].cmax():
                 print(f'Выиграл {key.upper()}. Игра завершена.')
                 step = 0
     print(f'В мешке остались бочонки:\n{bag}')

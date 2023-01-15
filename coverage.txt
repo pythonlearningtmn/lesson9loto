@@ -1,0 +1,9 @@
+---------- coverage: platform darwin, python 3.10.7-final-0 ----------
+Name                    Stmts   Miss  Cover
+-------------------------------------------
+class_loto.py              71     29    59%
+test_pytest_card.py        26      0   100%
+test_unittest_card.py      26      0   100%
+-------------------------------------------
+TOTAL                     123     29    76%
+
